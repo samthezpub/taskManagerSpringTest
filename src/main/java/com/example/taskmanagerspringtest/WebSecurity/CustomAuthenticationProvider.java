@@ -17,11 +17,9 @@ import java.util.Arrays;
 @Component
 @Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
+
     private UserRepository userRepository;
 
-    public CustomAuthenticationProvider() {
-    }
 
     public CustomAuthenticationProvider(UserRepository userRepository) {
         this.userRepository = userRepository;

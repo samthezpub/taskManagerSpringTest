@@ -23,7 +23,7 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping(path = "/finduser", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/finduser")
     @ResponseBody
     public ResponseEntity<User> getUser(@RequestParam String username){
         User userResponse = null;
@@ -32,6 +32,7 @@ public class AuthController {
         } catch (UserNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        // TODO сделать нормальную обработку
         ResponseEntity<User> userResponseEntity = new ResponseEntity<>(userResponse, HttpStatusCode.valueOf(200));
 
         return userResponseEntity;

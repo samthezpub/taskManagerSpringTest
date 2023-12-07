@@ -10,15 +10,18 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class WebConfig {
 
+    private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomAuthenticationProvider customAuthenticationProvider;
 
 
-    public WebConfig(CustomAuthenticationProvider customAuthenticationProvider) {
+    public WebConfig(JwtAuthenticationFilter jwtAuthFilter, CustomAuthenticationProvider customAuthenticationProvider) {
+        this.jwtAuthFilter = jwtAuthFilter;
         this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
@@ -37,22 +40,11 @@ public class WebConfig {
                 .authorizeHttpRequests((request) -> request
                         .anyRequest()
                         .authenticated()
-                );
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        var userDetailsService = new InMemoryUserDetailsManager();
-
-        var user = User.withUsername("john")
-                .password("12345")
-                .authorities("USER")
-                .build();
-
-        userDetailsService.createUser(user);
-        return userDetailsService;
-    }
 }
