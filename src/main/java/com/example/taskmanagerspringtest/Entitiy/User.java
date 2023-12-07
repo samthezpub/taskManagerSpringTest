@@ -1,8 +1,7 @@
 package com.example.taskmanagerspringtest.Entitiy;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +14,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "'user'")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 public class User implements UserDetails {
 
     @Id
@@ -33,7 +36,6 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(CascadeType.MERGE)
     private Set<Authority> authorities;
-
 
 
     @Override

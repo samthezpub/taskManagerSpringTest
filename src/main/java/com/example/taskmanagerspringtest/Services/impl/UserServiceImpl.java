@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Data
 public class UserServiceImpl implements UserService {
@@ -19,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByUsername(String username) throws UserNotFoundException {
-        return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("Пользователь не найден!"));
+//        return userRepository.findUserByUsername(username).orElseThrow(() -> new UserNotFoundException("Пользователь не найден!"));
+        return null;
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 }
